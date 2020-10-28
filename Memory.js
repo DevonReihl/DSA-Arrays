@@ -1,17 +1,17 @@
 class Memory {
   constructor() {
-    this.memory = new Float64Array(1024);
+    this.memory = new Array(1024);
     this.head = 0;
   }
 
   allocate(size) {
-    if(this.head + size > this.membeory.length) {
+    if (this.head + size > this.memory.length) {
       return null;
     }
 
     let start = this.head;
 
-    this.head =+ size;
+    this.head += size;
     return start;
   }
 
@@ -22,14 +22,15 @@ class Memory {
       return;
     }
 
-    if(fromIdx > toIdx) {
-      for(let i = 0; i < size; i++) {
-        this.set(toIdx +i, this.get(fromIdx + i));
+    if (fromIdx > toIdx) {
+      // Iterate forwards
+      for (let i = 0; i < size; i++) {
+        this.set(toIdx + i, this.get(fromIdx + i));
       }
-    }
-    else {
-      for (let i = size -1; i >= 0; i--) {
-        this.set(toIdx +i, this.get(fromIdx + 1));
+    } else {
+      // Iterate backwards
+      for (let i = size - 1; i >= 0; i--) {
+        this.set(toIdx + i, this.get(fromIdx + i));
       }
     }
   }
